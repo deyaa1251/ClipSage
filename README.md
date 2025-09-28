@@ -6,7 +6,7 @@
 
 
 
-
+![Logo](logo.png)
 
 ClipSage is a modern, intelligent clipboard manager that combines semantic search capabilities with a sleek PyQt6 interface. It automatically captures and indexes your clipboard history, enabling AI-powered search through your copied content.
 
