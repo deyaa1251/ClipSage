@@ -4,6 +4,14 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Qt6](https://img.shields.io/badge/Qt-6.0+-green.svg)](https://www.qt.io/)
 
+
+
+
+
+
+![Uploading ChatGPT Image Sep 28, 2025, 10_11_57 PM.png…]()
+
+
 ClipSage is a modern, intelligent clipboard manager that combines semantic search capabilities with a sleek PyQt6 interface. It automatically captures and indexes your clipboard history, enabling AI-powered search through your copied content.
 
 ## ✨ Features
