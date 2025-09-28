@@ -7,67 +7,77 @@ echo "🚀 Starting ClipSage - Advanced Clipboard Manager"
 echo "=================================================="
 
 # Check if we're in the right directory
-if [ ! -f "src/app/main.py" ]; then
-    echo "Error: Please run this script from the ClipSage root directory"
+if [ ! -f "pyproject.toml" ] || [ ! -d "clipsage" ]; then
+    echo "❌ Error: Please run this script from the ClipSage root directory"
+    echo "   Expected: pyproject.toml and clipsage/ directory"
     exit 1
 fi
 
 # Check if clipboard manager is running
 if ! pgrep -f "clipboard_manager" > /dev/null; then
-    echo " Clipboard manager not running. Starting it now..."
-    cd src/clip_board
+    echo "📋 Clipboard manager not running. Starting it now..."
+    cd clipsage/backend
     
     # Build if necessary
-    if [ ! -f "build/clipboard_manager" ]; then
-        echo " Building clipboard manager..."
-        ./install.sh
+    if [ ! -f "clipboard_manager" ]; then
+        echo "🔨 Building clipboard manager..."
+        mkdir -p build
+        cd build
+        cmake ..
+        make
+        cd ..
+        # Copy binary to backend directory
+        cp build/clipboard_manager . 2>/dev/null || echo "⚠️  Build may have failed"
     fi
     
     # Start clipboard manager in background
-    echo " Starting clipboard manager..."
-    ./run_clipboard_manager.sh &
-    CLIPBOARD_PID=$!
+    if [ -f "clipboard_manager" ]; then
+        echo "🚀 Starting clipboard manager..."
+        ./clipboard_manager &
+        CLIPBOARD_PID=$!
+        echo "✅ Clipboard manager started (PID: $CLIPBOARD_PID)"
+    else
+        echo "⚠️  Clipboard manager binary not found, continuing anyway..."
+    fi
+    
     cd ../../
     
     # Wait a moment for it to start
     sleep 2
-    
-    echo " Clipboard manager started (PID: $CLIPBOARD_PID)"
 else
-    echo "Clipboard manager already running"
+    echo "✅ Clipboard manager already running"
 fi
 
 # Check Python environment
-echo " Checking Python environment..."
-cd src/app
+echo "🐍 Checking Python environment..."
 
 if [ ! -d ".venv" ]; then
-    echo "️  Virtual environment not found. Creating one..."
+    echo "🔧 Virtual environment not found. Creating one..."
     python3 -m venv .venv
     source .venv/bin/activate
     pip install -r requirements.txt
 else
-    echo " Virtual environment found"
+    echo "✅ Virtual environment found"
+    source .venv/bin/activate
 fi
 
 # Check if Ollama is running
 if ! pgrep -f "ollama" > /dev/null; then
-    echo "️Ollama not running. Please start Ollama service first:"
+    echo "🤖 Ollama not running. Please start Ollama service first:"
     echo "   ollama serve"
     echo "   ollama pull all-minilm:22m"
     echo ""
-    echo "Continuing anyway - semantic search may not work..."
+    echo "⚠️  Continuing anyway - semantic search may not work..."
 else
-    echo " Ollama service is running"
+    echo "✅ Ollama service is running"
 fi
 
 # Start the GUI application
-echo " ClipSage GUI..."
+echo "🎨 Starting ClipSage GUI..."
 echo "=================================================="
 
-# Activate virtual environment and run
-source .venv/bin/activate
-python clipsage.py
+# Run the application using the new modular structure
+python -m clipsage
 
 echo ""
-echo " ClipSage session ended"
+echo "✅ ClipSage session ended"
