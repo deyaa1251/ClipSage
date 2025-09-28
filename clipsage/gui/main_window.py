@@ -10,7 +10,13 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import Qt, QTimer
 from PyQt6.QtGui import QPixmap
 
-from ..core.semantic_search import ClipboardSemanticSearch
+# Use optimized version for better performance
+try:
+    from ..core.semantic_search_optimized import (
+        OptimizedClipboardSemanticSearch as ClipboardSemanticSearch
+    )
+except ImportError:
+    from ..core.semantic_search import ClipboardSemanticSearch
 from ..core.config import config
 from .widgets import (
     ModernButton, SearchLineEdit, ClipboardItemWidget,
@@ -377,7 +383,9 @@ class ClipboardManagerUI(QMainWindow):
     
     def refresh_clipboard_data(self):
         """Refresh clipboard data and update display"""
-        self.load_clipboard_data()
+        # Only refresh if window is visible to save resources
+        if self.isVisible():
+            self.load_clipboard_data()
     
     def update_items_display(self, items):
         """Update the items list widget with given items"""
@@ -467,5 +475,9 @@ class ClipboardManagerUI(QMainWindow):
         config.set("window.width", geometry.width())
         config.set("window.height", geometry.height())
         config.save_config()
+        
+        # Cleanup resources
+        if hasattr(self.clipboard_search, 'cleanup'):
+            self.clipboard_search.cleanup()
         
         event.accept()

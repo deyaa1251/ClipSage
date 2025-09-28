@@ -54,8 +54,8 @@ class Config:
             "clipboard_path": str(Path(tempfile.gettempdir()) /
                                   "clipboard_manager"),
             "embedding_model": "all-minilm:22m",
-            "max_items": 1000,
-            "refresh_interval": 5000,  # milliseconds
+            "max_items": 500,  # Reduced for performance
+            "refresh_interval": 15000,  # 15 seconds - more reasonable
             "auto_refresh": True,
             "window": {
                 "width": 1200,
