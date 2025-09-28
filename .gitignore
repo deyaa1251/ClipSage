@@ -247,3 +247,90 @@ htmlcov/
 # Local configuration
 config.json
 .config/
+
+# Open Source Exclusions
+# ======================
+
+# Personal/Private data
+*.key
+*.pem 
+*.p12
+*.pfx
+secrets.json
+.secrets/
+private/
+personal/
+
+# API Keys and tokens
+.env.local
+.env.production
+.env.development
+**/api_keys.py
+**/secrets.py
+auth_config.py
+oauth_tokens.json
+
+# User data and clipboard content
+clipboard_data/
+user_data/
+*.clipboard
+clipboard_history/
+clipboard_backup/
+
+# Personal development environment
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vscode/settings.json
+.vscode/launch.json
+
+# Local development overrides  
+docker-compose.override.yml
+.env.override
+local_settings.py
+dev_config.py
+
+# Database files with potential user data
+*.db
+*.sqlite
+*.sqlite3
+clipboard.db
+
+# Backup files that might contain sensitive data
+*.bak
+*.backup
+*.old
+backup/
+backups/
+
+# System-specific files
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Local build artifacts
+*.deb
+*.rpm
+*.snap
+*.appimage
+*.dmg
+*.exe
+*.msi
+
+# Performance/profiling data that might be sensitive
+*.prof
+profiling_data/
+performance_logs/
+
+# Test data that might contain personal information
+test_data/personal/
+fixtures/personal/
+sample_clipboard_data/
+
+# Documentation drafts and notes
+NOTES.md
+PRIVATE_NOTES.md
+TODO_PRIVATE.md
+drafts/
