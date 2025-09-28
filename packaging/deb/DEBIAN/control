@@ -1,0 +1,18 @@
+Package: clipsage
+Version: 1.0.0
+Section: utils
+Priority: optional
+Architecture: amd64
+Depends: python3 (>= 3.10), python3-pip, python3-venv, cmake, build-essential, qt6-base-dev, libqt6core6, libqt6gui6, libqt6widgets6
+Maintainer: ClipSage Team <contact@clipsage.org>
+Description: Advanced Clipboard Manager with Semantic Search
+ ClipSage is a modern clipboard manager that combines intelligent semantic
+ search with a clean PyQt6 interface. It automatically captures clipboard
+ content and enables AI-powered search through your clipboard history.
+ .
+ Features:
+  - Semantic search through clipboard history
+  - Modern PyQt6 interface
+  - Support for text and images
+  - Automatic content capture
+  - Real-time search and preview

@@ -1,0 +1,4 @@
+PyQt6>=6.4.0
+langchain>=0.3.0
+langchain-ollama>=0.3.0
+Pillow>=9.0.0

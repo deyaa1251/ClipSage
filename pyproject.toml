@@ -1,0 +1,105 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "clipsage"
+version = "1.0.0"
+description = "Advanced Clipboard Manager with Semantic Search"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "ClipSage Team", email = "contact@clipsage.org"}
+]
+maintainers = [
+    {name = "ClipSage Team", email = "contact@clipsage.org"}
+]
+keywords = ["clipboard", "manager", "semantic-search", "ai", "productivity"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11", 
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: C++",
+    "Topic :: Office/Business",
+    "Topic :: Utilities",
+    "Topic :: Desktop Environment",
+    "Environment :: X11 Applications :: Qt"
+]
+requires-python = ">=3.10"
+dependencies = [
+    "PyQt6>=6.4.0",
+    "langchain>=0.3.0",
+    "langchain-ollama>=0.3.0",
+    "Pillow>=9.0.0",
+    "pathlib>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "black>=22.0.0",
+    "flake8>=5.0.0",
+    "mypy>=1.0.0",
+    "isort>=5.0.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/clipsage/clipsage"
+Repository = "https://github.com/clipsage/clipsage.git"
+Documentation = "https://github.com/clipsage/clipsage#readme"
+Changelog = "https://github.com/clipsage/clipsage/blob/main/CHANGELOG.md"
+"Bug Tracker" = "https://github.com/clipsage/clipsage/issues"
+
+[project.scripts]
+clipsage = "clipsage.__main__:main"
+
+[project.gui-scripts]
+clipsage-gui = "clipsage.__main__:main"
+
+[tool.setuptools]
+packages = ["clipsage", "clipsage.core", "clipsage.gui", "clipsage.backend"]
+
+[tool.setuptools.package-data]
+"clipsage.backend" = ["*.cpp", "CMakeLists.txt"]
+
+[tool.black]
+line-length = 79
+target-version = ['py310']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 79
+multi_line_output = 3
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true

@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# ClipSage Debian Package Post-Install Script
+
+set -e
+
+INSTALL_DIR="/opt/clipsage"
+BIN_DIR="/usr/local/bin"
+
+echo "Setting up ClipSage..."
+
+# Create virtual environment
+cd "$INSTALL_DIR"
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Install Python dependencies
+pip install --upgrade pip
+pip install -r requirements.txt
+
+# Build C++ backend
+cd clipsage/backend
+mkdir -p build
+cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+make -j$(nproc)
+cp clipboard_manager ..
+
+# Create launcher script
+cat > "$BIN_DIR/clipsage" << EOF
+#!/bin/bash
+cd "$INSTALL_DIR"
+source .venv/bin/activate
+python -m clipsage "\$@"
+EOF
+
+chmod +x "$BIN_DIR/clipsage"
+
+# Update desktop database
+if command -v update-desktop-database >/dev/null 2>&1; then
+    update-desktop-database /usr/share/applications
+fi
+
+echo "ClipSage installation completed successfully!"
+echo "Run 'clipsage' to start the application."
